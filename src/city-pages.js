@@ -23,7 +23,7 @@ allCards.forEach((card) => {
     'review-overall-callout w-condition-invisible'
   ).length;
   let calloutsElement = card.getElementsByClassName('reviews-overview-callouts');
-  if (hiddenCallouts == 8) {
+  if (hiddenCallouts === 8) {
     calloutsElement[0].style.display = 'none';
   }
 });
