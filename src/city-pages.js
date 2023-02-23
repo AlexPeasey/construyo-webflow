@@ -60,6 +60,7 @@ if (externalExpertsEmpty === true) {
   externalExpertsDiv[0].remove();
 }
 
+/* 
 function replaceUmlauts(str) {
   return str
     .replace(/\u00df/g, 'ss')
@@ -70,6 +71,7 @@ function replaceUmlauts(str) {
     .replace(/\u00d6/g, 'Oe')
     .replace(/\u00dc/g, 'Ue');
 }
+*/
 
 /*
  * Copyright (c) 2014 Mike King (@micjamking)
