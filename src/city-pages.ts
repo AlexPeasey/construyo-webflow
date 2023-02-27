@@ -1,7 +1,19 @@
+import $ from 'jquery';
+
 window.Webflow ||= [];
 window.Webflow.push(() => {
+  const numExpertsNear: number = document.querySelectorAll('.architects-near').length;
+  const expertsNearContainer: Element = document.getElementById(
+    'architects-near-container'
+  ) as HTMLElement;
+  const partnerProfiles = document.querySelectorAll('.expert-card.w-dyn-item');
+  const allCards = document.querySelectorAll('.card-wrapper');
+  const calloutsElements = document.querySelectorAll('.reviews-overview-callouts');
+  const numberOfExperts = document.querySelectorAll('.card-wrapper').length;
+  const numberOfExpertsHero = document.querySelector('#number-of-experts') as HTMLElement;
+  const numberOfExpertsNoHero = document.getElementById('number-of-experts-no-hero') as HTMLElement;
   addLinksToCards(allCards);
-  hideCalloutElement(hiddenCallouts, calloutsElement);
+  hideCalloutElement(calloutsElements);
   countExperts(numberOfExperts, numberOfExpertsHero, numberOfExpertsNoHero);
   removeArchitectsNearby(numExpertsNear, expertsNearContainer);
   addCommas(partnerProfiles);
@@ -36,10 +48,15 @@ function addLinksToCards(allCards: NodeListOf<Element>) {
 }
 
 //hides callout element if none displayed
-function hideCalloutElement(hiddenCallouts: number, calloutsElement: HTMLElement) {
-  if (hiddenCallouts === 8) {
-    calloutsElement.style.display = 'none';
-  }
+function hideCalloutElement(calloutsElement: NodeListOf<Element>) {
+  calloutsElement.forEach(function (node) {
+    const hiddenCallouts = node.querySelectorAll(
+      '.review-overall-callout, .w-condition-invisible'
+    ).length;
+    if (hiddenCallouts === 8) {
+      (node as HTMLElement).style.display = 'none';
+    }
+  });
 }
 
 //counts number of experts in total then assigns that number to strings on page
@@ -67,29 +84,10 @@ function addCommas(partnerProfiles: NodeListOf<Element>) {
 
 //removes external experts section if there are none
 function removeExternalExpertsSection() {
+  const externalExpertsEmpty =
+    document.querySelectorAll('.external-experts-list-wrapper.w-dyn-list .w-dyn-empty').length > 0;
   if (externalExpertsEmpty === true) {
     const externalExpertsDiv = document.querySelectorAll('.external-experts-div');
     externalExpertsDiv[0].remove();
   }
 }
-
-const externalExpertsEmpty =
-  document.querySelectorAll('.external-experts-list-wrapper.w-dyn-list .w-dyn-empty').length > 0;
-
-const numExpertsNear: number = document.querySelectorAll('.architects-near').length;
-const expertsNearContainer: Element = document.getElementById(
-  'architects-near-container'
-) as HTMLElement;
-
-const partnerProfiles = document.querySelectorAll('.expert-card.w-dyn-item');
-
-const allCards = document.querySelectorAll('.card-wrapper');
-
-const hiddenCallouts = document.querySelectorAll(
-  '.review-overall-callout w-condition-invisible'
-).length;
-const calloutsElement = document.querySelector('.reviews-overview-callouts') as HTMLElement;
-
-const numberOfExperts = document.querySelectorAll('.card-wrapper').length;
-const numberOfExpertsHero = document.querySelector('#number-of-experts') as HTMLElement;
-const numberOfExpertsNoHero = document.getElementById('number-of-experts-no-hero') as HTMLElement;
