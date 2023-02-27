@@ -1,13 +1,13 @@
 {
-  "name": "@alexpeasey/construyo-webflow-frontend-js",
+  "name": "@construyo-webflow/frontend-js",
   "version": "1.0.0",
   "description": "Front end JS for Construyo's Webflow site.",
   "homepage": "https://github.com/finsweet/developer-starter#readme",
   "license": "ISC",
   "keywords": [],
   "author": {
-    "name": "Finsweet",
-    "url": "https://www.finsweet.com/"
+    "name": "Construyo",
+    "url": "https://www.construyo.de/"
   },
   "repository": {
     "type": "git",
