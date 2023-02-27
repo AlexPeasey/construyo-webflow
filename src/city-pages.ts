@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 window.Webflow ||= [];
 window.Webflow.push(() => {
   const numExpertsNear: number = document.querySelectorAll('.architects-near').length;
@@ -18,15 +16,21 @@ window.Webflow.push(() => {
   removeArchitectsNearby(numExpertsNear, expertsNearContainer);
   addCommas(partnerProfiles);
   removeExternalExpertsSection();
-  $('.projects-container').click(function (event: JQuery.Event) {
-    goToProject($(this), event);
+  document.querySelectorAll<HTMLElement>('.projects-container').forEach((element: HTMLElement) => {
+    element.addEventListener('click', (event: MouseEvent) => {
+      goToProject(event, element);
+    });
   });
 });
 
 // go to projects on click
-function goToProject(thisObj: JQuery<HTMLElement>, event: JQuery.Event): void {
+function goToProject(event: MouseEvent, element: HTMLElement): void {
   event.preventDefault();
-  window.open(thisObj.find('.hide').text(), '_blank')?.focus();
+  const hideElement: HTMLElement | null = element.querySelector('.hide');
+  if (hideElement && hideElement.textContent) {
+    const url: string = hideElement.textContent;
+    window.open(url, '_blank')?.focus();
+  }
 }
 
 //Removes architects nearby section if there are no elements
