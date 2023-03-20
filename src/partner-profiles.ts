@@ -70,7 +70,8 @@ window.Webflow.push(() => {
     partnerColumn[0].classList.add('tender-partner-column');
 
     //loops through URLs of projects and review pages and gives them "?tender=true" so that the tender view continues when the page changes
-    const urls: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('project-card-container');
+    const urls: NodeListOf<HTMLAnchorElement> =
+      document.querySelectorAll('.project-card-container');
     for (let i = 0; i < urls.length; i++) {
       urls[i].href = urls[i].href + '?tender=true';
     }
