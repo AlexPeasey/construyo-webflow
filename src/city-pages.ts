@@ -44,8 +44,8 @@ function removeArchitectsNearby(numExpertsNear: number, expertsNearContainer: El
 function addLinksToCards(allCards: NodeListOf<Element>) {
   allCards.forEach((card) => {
     $(card).wrap(
-      '<a href="https://www.construyo.de/dienstleister/' +
-        $(card).prev().text() +
+      '<a href="' +
+        $(card).prev().prev().attr('href') +
         '" target="_blank" class="card-wrapper" style="padding:0"></a>'
     );
   });
