@@ -102,13 +102,14 @@ window.Webflow.push(() => {
     return `${baseUrl}?${urlParams}`;
   };
 
-  (document.getElementById('floating-CTA-architekt') as HTMLAnchorElement).href =
-    getFloatingCtaUrl('architekt');
-  (document.getElementById('floating-CTA-statiker') as HTMLAnchorElement).href =
-    getFloatingCtaUrl('statiker');
-  (document.getElementById('floating-CTA-energieberater') as HTMLAnchorElement).href =
-    getFloatingCtaUrl('energieberater');
-
+  if (window.location.href.includes('dienstleister')) {
+    (document.getElementById('floating-CTA-architekt') as HTMLAnchorElement).href =
+      getFloatingCtaUrl('architekt');
+    (document.getElementById('floating-CTA-statiker') as HTMLAnchorElement).href =
+      getFloatingCtaUrl('statiker');
+    (document.getElementById('floating-CTA-energieberater') as HTMLAnchorElement).href =
+      getFloatingCtaUrl('energieberater');
+  }
   //set extra margin at bottom of footer to account for floating CTA
   const footerBottom = document.getElementsByClassName('footer-bottom');
   footerBottom[0].setAttribute('style', 'margin-bottom:50px;');
@@ -127,9 +128,7 @@ window.Webflow.push(() => {
   const hiddenCallouts = document.getElementsByClassName(
     'review-overall-callout w-condition-invisible'
   ).length;
-  const calloutHeading = document.querySelector(
-    '.heading .partner-page-h3 .callouts'
-  ) as HTMLElement;
+  const calloutHeading = document.querySelector('.heading.partner-page-h3.callouts') as HTMLElement;
   if (hiddenCallouts === 8) {
     calloutHeading.style.display = 'none';
   }
@@ -149,10 +148,26 @@ window.Webflow.push(() => {
     professionsList[i].append(',');
   }
   // change internal links to include town names
-  const townName = document.querySelectorAll('.town-in')[0].innerHTML;
-  const townPlaceholder = document.querySelectorAll('.town');
-  for (let i = 0; i < townPlaceholder.length; i++) {
-    townPlaceholder[i].innerHTML = townName;
+  if (document.querySelector('.town-in')) {
+    const townName = document.querySelector('.town-in')?.innerHTML;
+    const townPlaceholder = document.querySelectorAll('.town');
+    for (let i = 0; i < townPlaceholder.length; i++) {
+      townPlaceholder[i].innerHTML = townName!;
+    }
+    // removes town internal links section if none are present
+    const internalLinksTowns = document.querySelectorAll('.internal-links-div.towns')[0];
+    let breadcrumbsContainer = document.querySelectorAll('.breadcrumbs-container');
+    breadcrumbsContainer = breadcrumbsContainer[0].querySelectorAll('a');
+    let numOfInvisible = 0;
+    for (let i = 0; i < breadcrumbsContainer.length; i++) {
+      if (breadcrumbsContainer[i].classList.contains('w-condition-invisible')) {
+        numOfInvisible += 1;
+      }
+    }
+    if (numOfInvisible === breadcrumbsContainer.length) {
+      internalLinksTowns.remove();
+      //    breadcrumbsDivider.remove();
+    }
   }
   // noindexes any page without a profile pic and reviews
   const reviewsOverview = document.querySelectorAll('.reviews-overview-section')[0];
@@ -174,20 +189,7 @@ window.Webflow.push(() => {
     meta.content = 'noindex';
     document.head.appendChild(meta);
   }
-  // removes town internal links section if none are present
-  const internalLinksTowns = document.querySelectorAll('.internal-links-div.towns')[0];
-  let breadcrumbsContainer = document.querySelectorAll('.breadcrumbs-container');
-  breadcrumbsContainer = breadcrumbsContainer[0].querySelectorAll('a');
-  let numOfInvisible = 0;
-  for (let i = 0; i < breadcrumbsContainer.length; i++) {
-    if (breadcrumbsContainer[i].classList.contains('w-condition-invisible')) {
-      numOfInvisible += 1;
-    }
-  }
-  if (numOfInvisible === breadcrumbsContainer.length) {
-    internalLinksTowns.remove();
-    //    breadcrumbsDivider.remove();
-  }
+
   //add comma to collaborations cards
   const collabCards = document.querySelectorAll('.collab-card');
   for (let i = 0; i < collabCards.length; i++) {
@@ -213,8 +215,11 @@ window.Webflow.push(() => {
   //sort and remove collabs above 9th one
   window.onload = function () {
     function clickSortButton() {
-      const cmsSort = document.querySelector('.fs_cmssort_button') as HTMLElement;
-      cmsSort.click();
+      if (!document.querySelector('.kollaborationen')) return;
+      else {
+        const cmsSort = document.querySelector('.fs_cmssort_button') as HTMLElement;
+        cmsSort.click();
+      }
     }
     clickSortButton();
   };
