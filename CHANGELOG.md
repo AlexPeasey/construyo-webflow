@@ -1,5 +1,11 @@
 # @construyo-webflow/frontend-js
 
+## 1.3.1
+
+### Patch Changes
+
+- a7d265d: Updated version
+
 ## 1.3.0
 
 ### Minor Changes
