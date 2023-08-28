@@ -1,5 +1,11 @@
 # @construyo-webflow/frontend-js
 
+## 1.3.0
+
+### Minor Changes
+
+- a155b01: Partner Profile page updated to work for Klimahandwerker
+
 ## 1.2.0
 
 ### Minor Changes
